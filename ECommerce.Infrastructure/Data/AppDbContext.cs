@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,6 +33,7 @@ namespace ECommerce.Infrastructure.Data
         public DbSet<WalletTransaction> WalletTransactions { get; set; }
         public DbSet<DeliveryAgent> DeliveryAgents { get; set; }
         public DbSet<AuditLog> AuditLogs { get; set; }
+        public DbSet<Person> Persons { get; set; }
 
         // join tables
         public DbSet<ProductCategory> ProductCategories { get; set; }

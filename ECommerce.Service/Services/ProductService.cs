@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using ECommerce.Core.DTOs.category;
+﻿using ECommerce.Core.DTOs.category;
 using ECommerce.Core.DTOs.product;
 using ECommerce.Core.Entities;
 using ECommerce.Core.GenralResponse;
@@ -52,6 +46,7 @@ namespace ECommerce.Service.Services
             {
                 var products = await _productRepository.GetProductsWithCategoryAsync();
                 var productDtos = products.Select(MapToProductDto);
+
                 return Response<IQueryable<ProductDto>>.Success(productDtos, "Products retrieved successfully");
             }
             catch (Exception ex)
@@ -121,9 +116,9 @@ namespace ECommerce.Service.Services
             try
             {
                 var existingProduct = await _productRepository.GetByIdAsyncAndInclude(id,
-                    q=> q.Include(x=>x.Category)
+                    q => q.Include(x => x.Category)
                     );
-                
+
                 if (existingProduct == null)
                     return Response<ProductDto>.Fail("Product not found");
 
@@ -191,9 +186,9 @@ namespace ECommerce.Service.Services
             {
                 var products = await _productRepository.GetProductsByVendorAsync(vendorId);
 
-                if(products?.Any()!= true)
+                if (products?.Any() != true)
                 {
-                    return Response<IEnumerable<ProductDto>>.Fail( "Vendor  dont have any products  ");
+                    return Response<IEnumerable<ProductDto>>.Fail("Vendor  dont have any products  ");
 
                 }
                 var productDtos = products.Select(MapToProductDto).ToList();
@@ -344,11 +339,11 @@ namespace ECommerce.Service.Services
                     Name = c.Name,
                     Description = c.Description,
                     ImageUrl = c.ImageUrl,
-                    ParentCategoryId=c.ParentCategoryId,
-                    ParentCategoryName=c.Name,
-                    ProductsCount=c.Products?.Count ?? 0,
+                    ParentCategoryId = c.ParentCategoryId,
+                    ParentCategoryName = c.Name,
+                    ProductsCount = c.Products?.Count ?? 0,
 
-                    
+
                 }).ToList();
 
                 return Response<List<CategoryDto>>.Success(categoryDtos, "Product categories retrieved successfully");
@@ -368,9 +363,9 @@ namespace ECommerce.Service.Services
 
                 if (products?.Any() != true)
                 {
-                  
-                       return Response<List<ProductDto>>.Fail("ProductsByCategorynotfound");
-                    
+
+                    return Response<List<ProductDto>>.Fail("ProductsByCategorynotfound");
+
 
                 }
 
@@ -383,11 +378,11 @@ namespace ECommerce.Service.Services
                     FinalPrice = p.FinalPrice,
                     ImageUrl = p.ImageUrl,
                     IsActive = p.IsActive,
-                    CategoryName=p.Category.Name,
-                    VendorShopName=p.Vendor?.ShopName,
-                    DiscountPercent=p.DiscountPercent,
-                    SKU=p.SKU,
-                    StockQuantity=p.StockQuantity
+                    CategoryName = p.Category.Name,
+                    VendorShopName = p.Vendor?.ShopName,
+                    DiscountPercent = p.DiscountPercent,
+                    SKU = p.SKU,
+                    StockQuantity = p.StockQuantity
                 }).ToList();
 
                 return Response<List<ProductDto>>.Success(productDtos, "Category products retrieved successfully");
